@@ -14,7 +14,6 @@ int main()
 		getcwd(current,1024);
 		printf("~%s$ ",current);
         char * line = read_line();
-        //printf("%s\n", line);
         char * line_new = brack(line);
         split_line1(line_new);
     }

@@ -1,3 +1,7 @@
+#define LINESIZE 256
+#define sep ";"
+#define space " "
+#define conv "|"
 #include <stdio.h>
 #include <sys/types.h>
 #include <stdlib.h>
@@ -6,10 +10,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
-#define LINESIZE 256
-#define sep ";"
-#define space " "
-#define conv "|"
 char * read_line();
 void split_line1(char * line);
 void split_line2(char * token);
