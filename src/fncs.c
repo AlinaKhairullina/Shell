@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include "shell.h"
-int b_cd (char * arg)//команда  cd
+int b_cd (char * arg)//the command cd
 {
     char current[70];
     getcwd(current, 70);
@@ -15,7 +15,7 @@ int b_cd (char * arg)//команда  cd
     arg++;
     if (*arg != '.')
     {
-        current[(strlen(current))] = '/'; // здесь не всегда правильно вставляет /
+        current[(strlen(current))] = '/'; 
         current[(strlen(current))] = '\0'; 
         strcat(current, arg);
         return chdir(current);
@@ -30,7 +30,7 @@ int b_cd (char * arg)//команда  cd
             strcat(current, str);
             return chdir(current);
         }
-        if ((*arg) == '/') // cd ./smth
+        if ((*arg) == '/') // if a command cd ./something
         {
             char * tmp = arg;
             while ((*tmp != ' ') && (*tmp != '\0')) tmp++;
@@ -38,7 +38,7 @@ int b_cd (char * arg)//команда  cd
             strcat(current, arg);
             return chdir(current);
         }
-        if ((*arg == '.') && ((*(arg + 1)) != '\0')) // if cd ../smth
+        if ((*arg == '.') && ((*(arg + 1)) != '\0')) //  if a command cd ../something
         {
             arg--;
             char * tmp = arg;
@@ -49,17 +49,18 @@ int b_cd (char * arg)//команда  cd
             strcat(current, arg);
             return chdir(current);
         }
-        else printf("Неверные аргументы для команды cd\n");
+        else printf("Invalid arguments for cd command\n");
     }
     return 1;
 }
+
 char * read_line()
 {
     unsigned size = LINESIZE;
     char * line = malloc(sizeof(char)*size);
     if (!line) 
     {
-        perror("Ошибка при выделении памяти: ");
+        perror("Segmentation fault: ");
         exit(1);
     }
     int i = 0;
@@ -84,12 +85,13 @@ char * read_line()
             line = realloc(line, size * sizeof(char));
             if (!line) 
             {
-                perror("Ошибка при выделении памяти: ");
+                perror("Segmentation fault: ");
                 exit(1);
             }
         }
     }
 }
+
 int token_is_conv(char *s)
 {
     for (int i = 0; i < strlen(s); i++)
@@ -98,6 +100,7 @@ int token_is_conv(char *s)
     }
     return 0;
 }
+
 int execute_cmd(char * s)
 {
     char ** args = malloc(sizeof(char*)*LINESIZE);
@@ -105,10 +108,7 @@ int execute_cmd(char * s)
     int in = 0;
     int out = 0;
     int fd1, fd2;
-    while (*s == ' ')
-    {
-        s++;
-    }
+    while (*s == ' ') s++;
     char *c = s;
     int counter = 0;
     int status;
@@ -162,7 +162,7 @@ int execute_cmd(char * s)
         }
     if ((*s == 'c') && (*(s + 1) == 'd'))
     {
-        return b_cd(s + 2); //cd должен вернуть 0 в случае успеха
+        return b_cd(s + 2); //cd returns 0 if it's successful
     }
     char *arg = strtok(s, space);
     while(arg)
@@ -221,10 +221,11 @@ int execute_cmd(char * s)
     }
     return stat;
 }
+
 int conveer(char *s)
 {
     int pozition = 0;
-    char ** args = malloc(sizeof(char*) * LINESIZE); //аргументы команд конвеера
+    char ** args = malloc(sizeof(char*) * LINESIZE); //pipeline command arguments
     char * arg = strtok(s, conv);
     while(arg)
     {
@@ -233,14 +234,14 @@ int conveer(char *s)
         pozition++;
         arg = strtok(NULL, conv);
     }
-    int fd[pozition - 1][2]; // каналы
-    pid_t pid[pozition]; // для сыновей
+    int fd[pozition - 1][2]; // pipes
+    pid_t pid[pozition]; // for sons
     for (int i = 0; i < pozition ; i++)
     {
         if (i != (pozition - 1)) pipe(fd[i]);
         if ((pid[i] = (fork())) == 0)
         {
-            char ** cmds = malloc(sizeof(char*)*LINESIZE); //аргументы команды
+            char ** cmds = malloc(sizeof(char*)*LINESIZE); //command's arguments
             int k = 0;
             char * cmd;
             int in = 0, out = 0, f_in, f_out;
@@ -298,7 +299,7 @@ int conveer(char *s)
                         default : break;
                     }
                 }
-            if (i == 0) //1st cmd
+            if (i == 0) //1st command
             {
                 if (in == 0) dup2(fd[i][1],1);
                 close(fd[i][0]);
@@ -319,7 +320,7 @@ int conveer(char *s)
                 execvp(cmds[0], cmds);
                 exit(1);
             }
-           else if (i == pozition - 1) //last cmd
+           else if (i == pozition - 1) //last command
            {
                 if (out == 0) dup2(fd[i - 1][0], 0);
                 close(fd[i - 1][1]);
@@ -383,12 +384,12 @@ void split_line2(char * token) // && ||
         else 
         {
             flg = execute_cmd(token);
-            if ((!flg) &&  (*(tmp - 1) != '|')) //выполнилось
+            if ((!flg) &&  (*(tmp - 1) != '|')) //completed
             {
                 token = tmp;
             }
             else
-            if ((flg) &&  (*(tmp - 1) == '|')) // если не выполнилось и ||
+            if ((flg) &&  (*(tmp - 1) == '|')) // if not completed and ||
             {
                 token = tmp;
             }
@@ -398,7 +399,7 @@ void split_line2(char * token) // && ||
     }
     return;
 }
-void split_line1(char * line) //разделяем все команды перечисленные через ;
+void split_line1(char * line) //separate all the commands listed through ;
 {
     int pozition = 0;  
     char ** tokens = malloc(sizeof(char*)*LINESIZE);
@@ -450,7 +451,7 @@ void split_line1(char * line) //разделяем все команды пер�
     }
     return;
 }
-char * brack(char * s)
+char * brack(char * s)//the function brack checks for the presence of parentheses in the command ()
 {
     int counter = 0;
     char *line = s;
