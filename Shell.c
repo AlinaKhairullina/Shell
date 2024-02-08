@@ -255,45 +255,6 @@ int conveer(char *s)
             char * cmd;
             int in = 0, out = 0, f_in, f_out;
             while (*args[i] == ' ' ) args[i]++;
-            // int counter = 0;
-            // char * end ;
-            // pid_t pid;
-            // char *tmp = args[i];
-            // if (*tmp == '(')
-            // {
-            //     args[i]++;
-            //     counter++;
-            //     char *tmp = args[i];
-            //     tmp++;
-            //     while(*tmp)
-            //     {
-            //         if (*tmp == '(') counter++;
-            //         if (*tmp == ')') counter--;
-            //         if ((*tmp == '$') && (*(tmp + 1) == '$'))
-            //         {
-            //             *tmp = '&';
-            //             *(tmp + 1)= '&';
-            //         }
-            //         if (counter == 0)
-            //         {
-            //             end = tmp;
-            //             tmp++;
-            //             *end = '\0';
-            //             if ((pid = fork()) == 0) 
-            //             {
-            //                 char * new = brack(args[i]);
-            //                 dup2(fd[i][1],1);
-            //                 dup2(fd[i - 1][0], 0);
-            //                 split_line1(new);
-            //                 exit(0);
-            //             }
-            //             break;
-            //         }
-            //         tmp++;
-            //     }
-            //     args[i] = tmp;
-            //     printf("!!!!%s\n", args[i]);
-            // }
             cmd = strtok(args[i], space);
             while(cmd)
             {
