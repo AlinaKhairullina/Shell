@@ -3,5 +3,7 @@ The following operations may be present on the command line (listed in descendin
  - |, >, >>, <
  - &&, ||
  - ;, &
+
+
 parentheses and an arbitrary number of spaces are also acceptable in the command.
 
