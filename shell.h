@@ -10,6 +10,7 @@
 #define sep ";"
 #define space " "
 #define conv "|"
+char * read_line();
 void split_line1(char * line);
 void split_line2(char * token);
 char * brack(char * s);

@@ -6,10 +6,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
-#define LINESIZE 256
-#define sep ";"
-#define space " "
-#define conv "|"
+#include "shell.h"
 int b_cd (char * arg)//команда  cd
 {
     char current[70];
