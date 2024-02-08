@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include "shell.h"
-int b_cd (char * arg)//the command cd
+int b_cd (char* arg)//the command cd
 {
     char current[70];
     getcwd(current, 70);
@@ -54,7 +54,7 @@ int b_cd (char * arg)//the command cd
     return 1;
 }
 
-char * read_line()
+char* read_line()
 {
     unsigned size = LINESIZE;
     char * line = malloc(sizeof(char)*size);
@@ -92,7 +92,7 @@ char * read_line()
     }
 }
 
-int token_is_conv(char *s)
+int token_is_conv(char* s)
 {
     for (int i = 0; i < strlen(s); i++)
     {
@@ -101,7 +101,7 @@ int token_is_conv(char *s)
     return 0;
 }
 
-int execute_cmd(char * s)
+int execute_cmd(char* s)
 {
     char ** args = malloc(sizeof(char*)*LINESIZE);
     int pozition = 0;
@@ -222,7 +222,7 @@ int execute_cmd(char * s)
     return stat;
 }
 
-int conveer(char *s)
+int conveer(char* s)
 {
     int pozition = 0;
     char ** args = malloc(sizeof(char*) * LINESIZE); //pipeline command arguments
@@ -346,7 +346,7 @@ int conveer(char *s)
             }
     return status_last;
 }
-void split_line2(char * token) // && ||
+void split_line2(char* token) // && ||
 {
     char * c = token;
     char *tmp;
@@ -399,7 +399,7 @@ void split_line2(char * token) // && ||
     }
     return;
 }
-void split_line1(char * line) //separate all the commands listed through ;
+void split_line1(char* line) //separate all the commands listed through ;
 {
     int pozition = 0;  
     char ** tokens = malloc(sizeof(char*)*LINESIZE);
@@ -451,7 +451,7 @@ void split_line1(char * line) //separate all the commands listed through ;
     }
     return;
 }
-char * brack(char * s)//the function brack checks for the presence of parentheses in the command ()
+char* brack(char* s)//the function brack checks for the presence of parentheses in the command ()
 {
     int counter = 0;
     char *line = s;
