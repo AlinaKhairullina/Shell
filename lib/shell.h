@@ -11,11 +11,11 @@
 #include <unistd.h>
 #include <signal.h>
 char * read_line();
-void split_line1(char * line);
-void split_line2(char * token);
-char * brack(char * s);
-int b_cd (char * arg);
-int token_is_conv(char *s);
-int execute_cmd(char * s);
-int conveer(char *s);
-int b_cd (char * arg);
+void split_line1(char* line);
+void split_line2(char* token);
+char * brack(char* s);
+int b_cd (char* arg);
+int token_is_conv(char* s);
+int execute_cmd(char* s);
+int conveer(char* s);
+int b_cd (char* arg);
