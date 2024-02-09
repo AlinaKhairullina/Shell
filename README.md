@@ -18,9 +18,9 @@
 
   **cmd &** - running a command in the background
 
-  **cmd1 && cmd2** - execute com1, if successful, execute com2
+  **cmd1 && cmd2** - execute cmd1, if successful, execute cmd2
 
-  **cmd1 || cmd2** - execute com1, if not successful, execute com2
+  **cmd1 || cmd2** - execute cmd1, if not successful, execute cmd2
   
   ## I/O redirection:
   
